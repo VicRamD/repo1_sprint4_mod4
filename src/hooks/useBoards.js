@@ -1,26 +1,14 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
+
+import { fetchData } from "./useAxios";
 
 const COLUMNS = [];
 
 const INITIAL_TASKS = [];
 
-const fetchData = async () => {
-  try {
-    const response = await axios.get("https://thesimpsonsapi.com/api/characters");
-    //console.log("Antes de response");
-    //console.log(response);
-    const {data} = response;
-    //console.log("Antes de data");
-    //console.log(data);
-    return data
-  } catch (error) {
-    console.error(error);
-  }
-}
 
 export const useBoard = () => {
-    const [tasks, setTasks] = useState([]);
+    const [items, setItems] = useState([]);
 
     const [columns, setColumns] = useState(COLUMNS);
     const [columnsAndTasks, setColumnsAndTasks] = useState(COLUMNS.reduce((acc, column) => {
@@ -28,14 +16,22 @@ export const useBoard = () => {
           return acc;
       }, {}));
 
+    const [endpoint, setEndPoint] = useState("https://pokeapi.co/api/v2/pokemon/");
+
     useEffect(()=>{
         const loadTasks = async () => {
-            const data = await fetchData();
-            console.log(data.results);
-            setTasks(data.results);
+            const dataResults = await fetchData(endpoint);
+            const mappedData = dataResults.map(item => {
+              return {id:item.url.match(/pokemon\/(\d+)\//)?.[1], 
+                name: item.name,
+                url: item.url
+              }
+          
+            })
+            setItems(mappedData);
         };
         loadTasks();
-    }, []);
+    }, [endpoint]);
 
-    return {tasks, setTasks, columns, setColumns, columnsAndTasks, setColumnsAndTasks}
+    return {items, setItems, columns, setColumns, columnsAndTasks, setColumnsAndTasks}
 }

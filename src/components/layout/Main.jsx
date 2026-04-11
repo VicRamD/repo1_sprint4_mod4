@@ -1,13 +1,15 @@
 import { KanbanBoardProvider } from '../../contexts/KanbanBoardContext'; 
 
 import SortableSection from '../drag-drop/SortableSection';
+import Pokedex from '../Pokedex';
 
 const Main = () => {
   return (
     <main className="flex lg:flex-row justify-center">
-      <KanbanBoardProvider>
+      <Pokedex/>
+      {/*<KanbanBoardProvider>
         <SortableSection/>
-      </KanbanBoardProvider>
+      </KanbanBoardProvider> */}
     </main>
   )
 }
