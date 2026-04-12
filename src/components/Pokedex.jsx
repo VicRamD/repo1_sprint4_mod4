@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react"
-import { fetchData } from "../hooks/useAxios"
 
 import { usePokedexContext } from "../contexts/PokedexContext";
 

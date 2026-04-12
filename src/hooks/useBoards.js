@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-import { fetchData } from "./useAxios";
+import { fetchList } from "./useAxios";
 
 const COLUMNS = [];
 
