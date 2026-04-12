@@ -2,6 +2,7 @@ import { useState, useEffect } from "react"
 import { fetchData } from "../hooks/useAxios"
 
 import DexEntry from "./DexEntry";
+import NameForm from "./NameForm";
 
 const Pokedex = () => {
 
@@ -70,7 +71,9 @@ const Pokedex = () => {
   if (loadingEntry || !entry) return <div>Cargando...</div>;
 
   return (
-    <div className='flex w-full flex-col md:flex-row md:justify-center border border-black border-solid bg-emerald-100 lg:w-9/12'>
+    <div className='flex w-full flex-col md:flex-row md:flex-wrap md:justify-center border border-black border-solid bg-emerald-100 lg:w-9/12'>
+
+      <NameForm/>
       <div className='md:w-2/6 p-4 flex flex-col items-center'>
         <img src={entry.img} alt={entry.name} className="size-64 border-8 border-double border-red-700"/> 
 
