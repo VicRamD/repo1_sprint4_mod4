@@ -2,7 +2,6 @@ import axios from "axios";
 
 export const fetchData = async (endPoint) => {
   try {
-    //const response = await axios.get("https://thesimpsonsapi.com/api/characters");
     const {data} = await axios.get(endPoint);
     
     //console.log("Antes de response");
