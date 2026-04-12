@@ -8,7 +8,7 @@ export const fetchData = async (endPoint) => {
     //console.log(response);
     //const {data} = response;
     //console.log("Antes de data");
-    console.log(data);
+    //console.log(data);
 
     //Devuelve data.results si results existe o solo data
     return data.results ?? data; 

@@ -6,7 +6,7 @@ export const usePokedex = () => {
     // registros en columna
   const [items, setItems] = useState([]);
   const [inicio, setInicio] = useState(0);
-  const [endpoint, setEndpoint] = useState(`https://pokeapi.co/api/v2/pokemon/?offset=${inicio}&limit=6`);
+  const [endpoint, setEndpoint] = useState(`https://pokeapi.co/api/v2/pokemon/?offset=${inicio}&limit=4`);
 
   //  datos individuales
   const [entryEnpoint, setEntryEndPoint] = useState(`https://pokeapi.co/api/v2/pokemon/${inicio+1}`);
@@ -26,6 +26,7 @@ export const usePokedex = () => {
             
               })
               setItems(mappedData);
+              console.log(endpoint);
           };
           loadItems();
       }, [endpoint]);
@@ -51,7 +52,7 @@ export const usePokedex = () => {
               });
   
               const pokemonData = {
-                id: dataResults.order,
+                id: dataResults.id,
                 name: dataResults.name,
                 types: types,
                 img: officialImg.front_default,
@@ -64,7 +65,26 @@ export const usePokedex = () => {
           loadEntry();
     }, [entryEnpoint]);
 
+    const updateInicioQuantity = (amount) => {
+        /*Math.max(1, item.quantity + amount): Compara el número 1 con el resultado de la cuenta 
+        y se queda con el más alto para evitar que baje a 0.
+        La eliminación será con el botón con icono de basurero*/
+        console.log("En update Inicio")
+        let newQuantity = inicio + amount;
+        let quantityToUpdate = Math.max(0, newQuantity)
+        setInicio(quantityToUpdate);
+    };
+
+    useEffect(()=>{
+      const updateInicio = () => {
+        setEndpoint(`https://pokeapi.co/api/v2/pokemon/?offset=${inicio}&limit=4`);
+        setEntryEndPoint(`https://pokeapi.co/api/v2/pokemon/${inicio+1}`);
+      }
+      updateInicio();
+    }, [inicio]);
+
+
     return {items, setItems, inicio, setInicio, endpoint, setEndpoint, 
-        entryEnpoint, setEntryEndPoint, entry, setEntry, loadingEntry};
+        entryEnpoint, setEntryEndPoint, entry, setEntry, loadingEntry, updateInicioQuantity};
 }
 
