@@ -6,10 +6,17 @@ const KanbanBoardContext = createContext();
 
 //Crear el proveedor del contexto
 export const KanbanBoardProvider = ({children}) => {
-    const {items: characters, setItems: setCharacters, columns, setColumns, columnsAndTasks, setColumnsAndTasks} = useBoard();
+    const {items: characters, setItems: setCharacters, columns, setColumns, columnsAndTasks, setColumnsAndTasks,
+        favoriteList, addToFavoriteList, removeFromFavoriteList,
+        isModalOpen, toggle, close
+    } = useBoard();
 
     return(
-        <KanbanBoardContext.Provider value={{characters, setCharacters, columns, setColumns, columnsAndTasks, setColumnsAndTasks}}>
+        <KanbanBoardContext.Provider value={{characters, setCharacters, columns, 
+            setColumns, columnsAndTasks, setColumnsAndTasks,
+            favoriteList, addToFavoriteList, removeFromFavoriteList,
+            isModalOpen, toggle, close
+        }}>
             {children}
         </KanbanBoardContext.Provider>
     );

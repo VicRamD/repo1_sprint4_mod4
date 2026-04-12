@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-import { fetchList } from "./useAxios";
+import { useFavoriteList, useFavoriteListModal } from "./useFavoriteList";
 
 const COLUMNS = [];
 
@@ -8,7 +8,12 @@ const INITIAL_TASKS = [];
 
 
 export const useBoard = () => {
-    const [items, setItems] = useState([]);
+
+    //Para manejar la lista favorita
+    const { favoriteList, addToFavoriteList, removeFromFavoriteList } = useFavoriteList("sz-favlist");
+    const {isModalOpen, toggle, close} = useFavoriteListModal();
+
+    const [items, setItems] = useState(favoriteList);
 
     const [columns, setColumns] = useState(COLUMNS);
     const [columnsAndTasks, setColumnsAndTasks] = useState(COLUMNS.reduce((acc, column) => {
@@ -16,22 +21,8 @@ export const useBoard = () => {
           return acc;
       }, {}));
 
-    const [endpoint, setEndPoint] = useState("https://pokeapi.co/api/v2/pokemon/");
-
-    useEffect(()=>{
-        const loadTasks = async () => {
-            const dataResults = await fetchData(endpoint);
-            const mappedData = dataResults.map(item => {
-              return {id:item.url.match(/pokemon\/(\d+)\//)?.[1], 
-                name: item.name,
-                url: item.url
-              }
-          
-            })
-            setItems(mappedData);
-        };
-        loadTasks();
-    }, [endpoint]);
-
-    return {items, setItems, columns, setColumns, columnsAndTasks, setColumnsAndTasks}
+    return {items, setItems, columns, setColumns, columnsAndTasks, setColumnsAndTasks,
+        favoriteList, addToFavoriteList, removeFromFavoriteList,
+        isModalOpen, toggle, close
+    }
 }

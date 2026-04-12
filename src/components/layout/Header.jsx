@@ -1,9 +1,12 @@
 import { useThemeContext } from "../../contexts/ThemeContext"
 import { useOpener } from "../../hooks/useOpener";
+import { useFavoriteListModal } from "../../hooks/useFavoriteList";
 
 const Header = () => {
   const {changeTheme, themes} = useThemeContext();
   const {toggle: switcher, close, isOpen} = useOpener();
+
+  const {toggle} = useFavoriteListModal();
 
   function closeTabAndChangeTheme(themeName){
       changeTheme(themeName);
@@ -15,7 +18,7 @@ const Header = () => {
         <nav className='flex items-center justify-between w-full h-[5em] bg-blue-600 dark:bg-gray-600 elegance:bg-elegance-600
         radiation:bg-radiation-600 mx-auto z-30 py-5 px-6 lg:px-20 2xl:px-0'>
 
-          <div className='flex gap-1'>
+          <div className='flex gap-4'>
               <div className="flex gap-4">
                 {/**menu desplegable */}
                 <div className="relative h-fit w-fit">
