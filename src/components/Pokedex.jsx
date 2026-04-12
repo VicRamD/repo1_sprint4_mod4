@@ -17,7 +17,7 @@ const Pokedex = () => {
     <div className='flex w-full flex-col md:flex-row md:flex-wrap md:justify-center border border-black border-solid bg-emerald-100 lg:w-9/12'>
 
       <NameForm/>
-      <div className='md:w-2/6 p-4 flex flex-col items-center'>
+      <div className='md:w-2/6 p-4 flex flex-col items-center justify-center'>
         <img src={entry.img} alt={entry.name} className="size-64 border-8 border-double border-red-700"/> 
 
         <div className="flex flex-row justify-around">

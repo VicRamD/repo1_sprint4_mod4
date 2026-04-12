@@ -6,12 +6,18 @@ export const usePokedex = () => {
     // registros en columna
   const [items, setItems] = useState([]);
   const [inicio, setInicio] = useState(0);
-  const [endpoint, setEndpoint] = useState(`https://pokeapi.co/api/v2/pokemon/?offset=${inicio}&limit=4`);
+  //const [endpoint, setEndpoint] = useState(`https://pokeapi.co/api/v2/pokemon/?offset=${inicio}&limit=4`);
 
   //  datos individuales
-  const [entryEnpoint, setEntryEndPoint] = useState(`https://pokeapi.co/api/v2/pokemon/${inicio+1}`);
+  //const [entryEndpoint, setEntryEndPoint] = useState(`https://pokeapi.co/api/v2/pokemon/${inicio+1}`);
   const [entry, setEntry] = useState(null);
   const [loadingEntry, setLoadingEntry] = useState(true);
+
+  //Para busqueda:
+  const [query, setQuery] = useState(null); 
+
+  const endpoint = `https://pokeapi.co/api/v2/pokemon/?offset=${inicio}&limit=4`;
+  const entryEndpoint = `https://pokeapi.co/api/v2/pokemon/${query ?? inicio + 1}`;
 
   //items
     useEffect(()=>{
@@ -26,7 +32,7 @@ export const usePokedex = () => {
             
               })
               setItems(mappedData);
-              console.log(endpoint);
+              //console.log(endpoint);
           };
           loadItems();
       }, [endpoint]);
@@ -36,7 +42,7 @@ export const usePokedex = () => {
           const loadEntry = async () => {
               //inicia la carga
               setLoadingEntry(true); 
-              const dataResults = await fetchData(entryEnpoint);
+              const dataResults = await fetchData(entryEndpoint);
   
               //imagen oficial
               const imageResult = dataResults.sprites.other;
@@ -57,34 +63,54 @@ export const usePokedex = () => {
                 types: types,
                 img: officialImg.front_default,
               }
-              console.log(pokemonData);
+              //console.log(pokemonData);
               setEntry(pokemonData);
               //termina de cargar
               setLoadingEntry(false);
           };
           loadEntry();
-    }, [entryEnpoint]);
+    }, [entryEndpoint]);
 
     const updateInicioQuantity = (amount) => {
         /*Math.max(1, item.quantity + amount): Compara el número 1 con el resultado de la cuenta 
         y se queda con el más alto para evitar que baje a 0.
         La eliminación será con el botón con icono de basurero*/
-        console.log("En update Inicio")
+        /*console.log("En update Inicio")
         let newQuantity = inicio + amount;
         let quantityToUpdate = Math.max(0, newQuantity)
-        setInicio(quantityToUpdate);
+        setInicio(quantityToUpdate); */
+        setInicio(prev => Math.max(0, prev + amount));
     };
 
+    /*
     useEffect(()=>{
       const updateInicio = () => {
         setEndpoint(`https://pokeapi.co/api/v2/pokemon/?offset=${inicio}&limit=4`);
         setEntryEndPoint(`https://pokeapi.co/api/v2/pokemon/${inicio+1}`);
       }
       updateInicio();
-    }, [inicio]);
+    }, [inicio]); */
+
+    const searchPokemon = (query) => {  
+        const isNumber = esEntero(query);
+        if(isNumber){
+          let number = Number(query);
+          if(number <= 0) {
+            console.log("debe ser número positivo mayor a 0");
+          } else {
+            setQuery(number);
+          }
+        } else {
+          setQuery(query);
+        }
+    };
 
 
-    return {items, setItems, inicio, setInicio, endpoint, setEndpoint, 
-        entryEnpoint, setEntryEndPoint, entry, setEntry, loadingEntry, updateInicioQuantity};
+    return {items, setItems, inicio, setInicio, endpoint, 
+        entryEndpoint, entry, setEntry, loadingEntry, updateInicioQuantity, searchPokemon};
 }
 
+function esEntero(str) {
+  // Convierte el string a número y verifica si es entero
+  return Number.isInteger(Number(str)) && str.trim() !== '';
+}
