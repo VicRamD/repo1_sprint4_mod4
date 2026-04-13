@@ -24,7 +24,7 @@ export default function SortableSection() {
     >
 
         {<div className={`bg-amber-100 dark:bg-gray-200 py-10 flex justify-center`}>
-          <div className={`max-w-6xl mx-auto px-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6`}>
+          <div className={`max-w-6xl mx-auto px-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6`}>
               
                 {/* Card Component ¨*/}
                 {characters.map((character, index) => <CharacterCard key={character.id} character={character} index={index}/>)}
