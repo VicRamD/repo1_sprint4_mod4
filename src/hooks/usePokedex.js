@@ -51,13 +51,11 @@ const fetchPokemon = async (idOrName) => {
     setLoadingEntry(true);
     try {
       const { data } = await axios.get(`https://pokeapi.co/api/v2/pokemon/${idOrName}`);
+      toast.success(`Data fetch successfully`);
       return data;
     } catch (err) {
       // 404 = pokemon no encontrado, cualquier otro es error real
-      if (err.response?.status === 404) {
-        return { notFound: true };
-      }
-      toast.error(`Error Status ${err.response.status} - ${err.message}`);
+      toast.error(`Error Status ${err.response.status} - ${err.message}`);      
       return null;
     } finally {
       setLoadingEntry(false);
