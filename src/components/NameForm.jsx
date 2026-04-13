@@ -14,7 +14,7 @@ const NameForm = () => {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="w-full flex flex-col sm:flex-row justify-center gap-1 sm:gap-4">
+    <form onSubmit={handleSubmit} className="w-full flex flex-col my-2 sm:flex-row justify-center gap-1 sm:gap-4">
         <label htmlFor="pokemon" className="p-2 text-xl">Pokémon Name or Number:</label>
         <input id="pokemon" type="text" className="bg-white border-2 p-2 border-red-700 border-solid rounded-md
          text-black" 

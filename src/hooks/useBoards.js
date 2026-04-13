@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 
-import { useFavoriteList, useFavoriteListModal } from "./useFavoriteList";
+//import { useFavoriteList, useFavoriteListModal } from "./useFavoriteList";
+import { useFavoriteListModal } from "./useFavoriteList";
+import { useFavoriteListContext } from "../contexts/FavoriteListContext";
 
 const COLUMNS = [];
 
@@ -10,8 +12,10 @@ const INITIAL_TASKS = [];
 export const useBoard = () => {
 
     //Para manejar la lista favorita
-    const { favoriteList, addToFavoriteList, removeFromFavoriteList } = useFavoriteList("sz-favlist");
+    //const { favoriteList, addToFavoriteList, removeFromFavoriteList } = useFavoriteList("sz-favlist");
     const {isModalOpen, toggle, close} = useFavoriteListModal();
+
+    const { favoriteList } = useFavoriteListContext();
 
     const [items, setItems] = useState(favoriteList);
 
@@ -21,8 +25,11 @@ export const useBoard = () => {
           return acc;
       }, {}));
 
+    useEffect(() => {
+        setItems(favoriteList); // Actualiza items cuando cambie favoriteList
+    }, [favoriteList]);
+
     return {items, setItems, columns, setColumns, columnsAndTasks, setColumnsAndTasks,
-        favoriteList, addToFavoriteList, removeFromFavoriteList,
         isModalOpen, toggle, close
     }
 }

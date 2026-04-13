@@ -5,9 +5,12 @@ import { usePokedexContext } from "../contexts/PokedexContext";
 import DexEntry from "./DexEntry";
 import NameForm from "./NameForm";
 
+import { useFavoriteListContext } from "../contexts/FavoriteListContext";
+
 const Pokedex = () => {
 
     const {items, entry, loadingEntry, updateInicioQuantity} = usePokedexContext();
+    const { addToFavoriteList } = useFavoriteListContext();
 
     // Early return mientras carga o si no hay datos
   if (loadingEntry || !entry) return <div>Cargando...</div>;
@@ -24,9 +27,11 @@ const Pokedex = () => {
           <p><strong>{entry.name.toUpperCase()}</strong></p>
         </div>
         
-        <div className="flex flex-row justify-around w-4/6 p-4 md:w-full md:justify-center">
+        <div className="flex flex-row flex-wrap justify-around w-4/6 p-4 md:w-full md:justify-center">
           {entry.types.map(type=> <p key={type} className="px-6 py-2 border-solid border-black border rounded-lg
           md:mx-4">{type.toUpperCase()}</p>)}
+          <button className="w-full cursor-pointer p-2 mt-2 bg-emerald-600 text-white 
+          hover:bg-neutral-400 hover:text-black" onClick={()=>addToFavoriteList(entry)}>Add to Favorites</button>
         </div>
       </div>
       <div className='p-4'>

@@ -8,7 +8,7 @@ import { PokedexProvider } from '../../contexts/PokedexContext'
 const Main = () => {
 
   return (
-    <main className="flex lg:flex-row lg:flex-wrap justify-center">
+    <main className="flex flex-col lg:flex-row lg:flex-wrap justify-center">
       <KanbanBoardProvider>
         <FavoriteListModal/>
       </KanbanBoardProvider> 
