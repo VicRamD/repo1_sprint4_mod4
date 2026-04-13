@@ -1,39 +1,86 @@
 import { useState, useEffect } from "react";
 
-import { fetchList, fetchPokemon } from "./useAxios";
+//import { fetchList, fetchPokemon } from "./useAxios";
+
+import { toast } from "react-toastify";
+
+import axios from "axios";
+
 
 export const usePokedex = () => {
     // registros en columna
   const [items, setItems] = useState([]);
   const [inicio, setInicio] = useState(0);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   //const [endpoint, setEndpoint] = useState(`https://pokeapi.co/api/v2/pokemon/?offset=${inicio}&limit=4`);
 
-  //  datos individuales
+  
+  const endpoint = `https://pokeapi.co/api/v2/pokemon/?offset=${inicio}&limit=4`;
+  //const entryEndpoint = `https://pokeapi.co/api/v2/pokemon/${query ?? inicio + 1}`;
+  
+
+  const fetchList = async (endPoint) => {
+  try {
+    setLoading(true);
+    const {data} = await axios.get(endPoint);
+    return data.results ?? data; 
+  } catch (err) {
+    setError(err);
+    toast.error(`Error Status ${err.response.status} - ${err.message}`);
+    //console.error(error.response.data);
+    return null;
+  } finally {
+      setLoading(false);
+  }
+}
+
+//  datos individuales
   //const [entryEndpoint, setEntryEndPoint] = useState(`https://pokeapi.co/api/v2/pokemon/${inicio+1}`);
   const [entry, setEntry] = useState(null);
   const [loadingEntry, setLoadingEntry] = useState(true);
 
-  //Para busqueda:
+  //Para busqueda de un pokémon especifico:
   const [query, setQuery] = useState(null); 
   const [entryError, setEntryError] = useState(null);
 
-  const endpoint = `https://pokeapi.co/api/v2/pokemon/?offset=${inicio}&limit=4`;
-  //const entryEndpoint = `https://pokeapi.co/api/v2/pokemon/${query ?? inicio + 1}`;
-  const entryEndpoint = query ?? inicio + 1; // ← solo el id/nombre, no la URL completa
+  const entryEndpoint = query ?? inicio + 1; 
+
+const fetchPokemon = async (idOrName) => {
+    
+    setLoadingEntry(true);
+    try {
+      const { data } = await axios.get(`https://pokeapi.co/api/v2/pokemon/${idOrName}`);
+      return data;
+    } catch (err) {
+      // 404 = pokemon no encontrado, cualquier otro es error real
+      if (err.response?.status === 404) {
+        return { notFound: true };
+      }
+      toast.error(`Error Status ${err.response.status} - ${err.message}`);
+      return null;
+    } finally {
+      setLoadingEntry(false);
+    }
+  }
+
+
 
   //items - lista 
     useEffect(()=>{
           const loadItems = async () => {
               const dataResults = await fetchList(endpoint);
-              const mappedData = dataResults.map(item => {
-                return {
-                  id:item.url.match(/pokemon\/(\d+)\//)?.[1], 
-                  name: item.name.charAt(0).toUpperCase() + item.name.slice(1),
-                  url: item.url
-                }
-            
-              })
-              setItems(mappedData);
+              if(dataResults){
+                const mappedData = dataResults.map(item => {
+                  return {
+                    id:item.url.match(/pokemon\/(\d+)\//)?.[1], 
+                    name: item.name.charAt(0).toUpperCase() + item.name.slice(1),
+                    url: item.url
+                  }
+                  
+                });
+                setItems(mappedData);
+              } 
               //console.log(endpoint);
           };
           loadItems();
