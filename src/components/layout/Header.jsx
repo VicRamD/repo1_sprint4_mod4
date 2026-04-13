@@ -2,6 +2,8 @@ import { useThemeContext } from "../../contexts/ThemeContext"
 import { useOpener } from "../../hooks/useOpener";
 import { useFavoriteListModal } from "../../hooks/useFavoriteList";
 
+import logo from '../../assets/Logo_de_Pokémon_EN.png'
+
 const Header = () => {
   const {changeTheme, themes} = useThemeContext();
   const {toggle: switcher, close, isOpen} = useOpener();
@@ -17,6 +19,10 @@ const Header = () => {
     <header className="mb-4">
         <nav className='flex items-center justify-between w-full h-[5em] bg-blue-600 dark:bg-gray-600 elegance:bg-elegance-600
         radiation:bg-radiation-600 mx-auto z-30 py-5 px-6 lg:px-20 2xl:px-0'>
+          <a href="/">
+              <img src={logo} alt="logo libroteca" style={{width: '100px', height: '50px'}}/>
+          </a>
+
 
           <div className='flex gap-4'>
               <div className="flex gap-4">
