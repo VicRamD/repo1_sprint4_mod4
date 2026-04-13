@@ -22,7 +22,7 @@
 
 @theme {
 
-    /* Neutral elegance */
+    /* elegance */
     --color-elegance-100: oklch(0.9136 0.03 63.64);
     --color-elegance-200: oklch(0.9136 0.0583 63.64);
     --color-elegance-300: oklch(0.8095 0.024 65.39);
@@ -30,7 +30,7 @@
     --color-elegance-500: oklch(0.4307 0.0548 61.35);
     --color-elegance-600: oklch(0.36 0.0548 61.35);
 
-    /* Radiation elegance */
+    /* radiation */
     --color-radiation-50: oklch(0.86 0.18 107); 
     --color-radiation-100: oklch(0.74 0.1 87);
     --color-radiation-200: oklch(0.85 0.15 87);
