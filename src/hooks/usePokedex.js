@@ -90,50 +90,42 @@ const fetchPokemon = async (idOrName) => {
     useEffect(()=>{
           const loadEntry = async () => {
               //inicia la carga
-              setLoadingEntry(true);
+              //setLoadingEntry(true);
               //limpia error 
-              setEntryError(null);
+              //setEntryError(null);
 
               const dataResults = await fetchPokemon(entryEndpoint);
 
-              // Fetch falló (error de red, etc)
-              if (!dataResults) {
-                setEntryError("Error al conectar con la API.");
-                setLoadingEntry(false);
-                return;
-              }
+              if (dataResults) {
+                  //imagen oficial
+                  const imageResult = dataResults.sprites.other;
+                  const officialImg = imageResult["official-artwork"];
+      
+                  //tipos
+                  const typesObject = dataResults.types
+                  const typeNumberArray = Object.keys(typesObject);
+                  const types = typeNumberArray.map((number) => {
+                    let numberObject = typesObject[number];
+                    let {type} = numberObject;
+                    return type.name;
+                  });  
 
-              // 404 - no se encontró nada con la query
-              if (dataResults.notFound) {
-                setEntryError(`No se encontró "${entryEndpoint}".`);
-                setLoadingEntry(false);
-                return;
+                  const pokemonData = {
+                    id: dataResults.id,
+                    name: dataResults.name,
+                    types: types,
+                    img: officialImg.front_default,
+                  }
+                  //console.log(pokemonData);
+                  setEntry(pokemonData);
+                  setInicio(pokemonData.id - 1);
+                  //termina de cargar
+                  //setLoadingEntry(false);
               }
   
-              //imagen oficial
-              const imageResult = dataResults.sprites.other;
-              const officialImg = imageResult["official-artwork"];
+              
   
-              //tipos
-              const typesObject = dataResults.types
-              const typeNumberArray = Object.keys(typesObject);
-              const types = typeNumberArray.map((number) => {
-                let numberObject = typesObject[number];
-                let {type} = numberObject;
-                return type.name;
-              });
-  
-              const pokemonData = {
-                id: dataResults.id,
-                name: dataResults.name,
-                types: types,
-                img: officialImg.front_default,
-              }
-              //console.log(pokemonData);
-              setEntry(pokemonData);
-              setInicio(pokemonData.id - 1);
-              //termina de cargar
-              setLoadingEntry(false);
+              
           };
           loadEntry();
     }, [entryEndpoint]);
