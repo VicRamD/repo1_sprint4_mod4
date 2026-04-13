@@ -1,18 +1,15 @@
-# React + Vite
+# Trabajo Práctico 4 - Integración con APIs
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Objetivo
+Desarrollar una aplicación completa en React + Vite que consuma una API externa, renderice los datos en pantalla y permita al usuario realizar acciones a través de formularios y la interacción con la API.
 
-Currently, two official plugins are available:
+### API Utilizada
+Para este proyecto he trabajado con la API REST de Pokémon:
+`https://pokeapi.co/`
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+Documentación: `https://pokeapi.co/docs/v2`
 
-## React Compiler
+### Busquedas
+Para realizar las peticiones HTTP para la busqueda de datos he empleado Axios. No tengo una razón particular para ello,
+simplemente quería probarla ya que en el pasado solo he usado fecth.
 
-The React Compiler is enabled on this template. See [this documentation](https://react.dev/learn/react-compiler) for more information.
-
-Note: This will impact Vite dev & build performances.
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
