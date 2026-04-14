@@ -13,3 +13,5 @@ Documentación: `https://pokeapi.co/docs/v2`
 Para realizar las peticiones HTTP para la busqueda de datos he empleado Axios. No tengo una razón particular para ello,
 simplemente quería probarla ya que en el pasado solo he usado fecth.
 
+### Despliegue
+EL despliegue se realizó en Netlify: `https://sp4-poke.netlify.app/`
