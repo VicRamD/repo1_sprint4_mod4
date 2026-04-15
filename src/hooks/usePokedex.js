@@ -6,6 +6,7 @@ import { toast } from "react-toastify";
 
 import axios from "axios";
 
+const apiEndpoint = import.meta.env.VITE_POKEAPI_ENDPOINT;
 
 export const usePokedex = () => {
     // registros en columna
@@ -16,7 +17,7 @@ export const usePokedex = () => {
   //const [endpoint, setEndpoint] = useState(`https://pokeapi.co/api/v2/pokemon/?offset=${inicio}&limit=4`);
 
   
-  const endpoint = `https://pokeapi.co/api/v2/pokemon/?offset=${inicio}&limit=4`;
+  const endpoint = `${apiEndpoint}?offset=${inicio}&limit=4`;
   //const entryEndpoint = `https://pokeapi.co/api/v2/pokemon/${query ?? inicio + 1}`;
   
 
@@ -50,7 +51,7 @@ const fetchPokemon = async (idOrName) => {
     
     setLoadingEntry(true);
     try {
-      const { data } = await axios.get(`https://pokeapi.co/api/v2/pokemon/${idOrName}`);
+      const { data } = await axios.get(`${apiEndpoint}${idOrName}`);
       toast.success(`Data fetch successfully`);
       return data;
     } catch (err) {
